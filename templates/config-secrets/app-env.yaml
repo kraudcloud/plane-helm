@@ -20,6 +20,7 @@ data:
     DEBUG: "0"
     DOCKERIZED: "1"
     GUNICORN_WORKERS: {{ .Values.env.gunicorn_api_workers | default 1 | quote }}
+    ENABLE_SIGNUP: {{.Values.env.enable_signup | default 1 | quote }}
 
     {{- if and .Values.ingress.enabled .Values.ingress.host }}
     WEB_URL: "http://{{ .Values.ingress.host }}"
@@ -53,3 +54,4 @@ data:
     {{ else }}
     DATABASE_URL: ""
     {{ end }}
+
