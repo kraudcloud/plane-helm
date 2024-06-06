@@ -10,8 +10,6 @@ spec:
     metadata:
       labels:
         app.name: {{ .Release.Namespace }}-{{ .Release.Name }}-api-migrate
-      annotations:
-        timestamp: {{ now | quote }}
     spec:
       containers:
       - name: {{ .Release.Name }}-api-migrate

@@ -13,8 +13,6 @@ spec:
       namespace: {{ .Release.Namespace }}
       labels:
         app.name: {{ .Release.Namespace }}-{{ .Release.Name }}-worker
-      annotations:
-        timestamp: {{ now | quote }}
     spec:
       containers:
       - name: {{ .Release.Name }}-worker
