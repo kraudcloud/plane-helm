@@ -20,13 +20,14 @@ redis:
   storageClass: longhorn
   volumeSize: 1Gi
 
-postgres:
-  local_setup: true
-  image: postgres:15.5-alpine
-  servicePort: 5432
-  cliConnectPort: ""
-  storageClass: longhorn
-  volumeSize: 5Gi
+postgresql:
+  enabled: true
+  # used only when chart is not enabled.
+  url: ""
+  auth:
+    username: plane
+    password: password
+    database: plane
 
 minio:
   local_setup: true
@@ -73,11 +74,6 @@ beatworker:
   image: makeplane/plane-backend
 
 env:
-  pgdb_username: plane
-  pgdb_password: plane
-  pgdb_name: plane
-  pgdb_remote_url: "" #INCASE OF REMOTE PG DB URL ONLY
-
   # NEXT_PUBLIC_DEPLOY_URL:  ""
   # REDIS
   remote_redis_url: "" #INCASE OF REMOTE REDIS ONLY
