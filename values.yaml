@@ -14,15 +14,11 @@ ingress:
   annotations: {}
 
 redis:
-  local_setup: true
-  image: redis:7.2.4-alpine
-  servicePort: 6379
-  storageClass: longhorn
-  volumeSize: 1Gi
+  enabled: true
+  url: ""
 
 postgresql:
   enabled: true
-  # used only when chart is not enabled.
   url: ""
   auth:
     username: plane
@@ -75,10 +71,6 @@ beatworker:
 
 env:
   # NEXT_PUBLIC_DEPLOY_URL:  ""
-  # REDIS
-  remote_redis_url: "" #INCASE OF REMOTE REDIS ONLY
-  # POSTGRES DB VALUES
-
   # DATA STORE
   docstore_bucket: "uploads"
   doc_upload_size_limit: "5242880" # 5MB

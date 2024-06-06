@@ -6,16 +6,10 @@ Forked from [upstream/ref/branch/chore/helm](https://github.com/makeplane/plane/
 
 Follow below steps to setup **Plane**
 
-Add Helm Repo
-
-```sh
-helm repo add makeplane https://helm.plane.so/
-```
-
 You must refer the configuration variables before proceeding. This can be done by running the below command or visiting **Configuration** tab.
 
 ```sh
-helm show values plane-ce --repo https://helm.plane.so 
+helm show values oci://ghcr.io/karitham/plane-helm/plane-helm
 ```
 
 Basic Install
@@ -23,24 +17,23 @@ Basic Install
 ```sh
 helm install \
     --create-namespace \
-    --namespace plane-ns \
-    --set ingress.appHost="plane.example.com" \
-    --set ingress.minioHost="plane-minio.example.com" \
-    my-plane makeplane/plane-ce
+    --namespace plane \
+    --set ingress.host="plane.example.com" \
+    plane oci://ghcr.io/karitham/helm-plane/helm-plane:1.1.2
 ```
 
 Customise Remote Postgress URL
 
 ```sh
-    --set postgres.local_setup=false \
-    --set env.pgdb_remote_url="postgress://[username]:[password]@[pg-host]/[db-name]" \
+    --set postgresql.enabled=false \
+    --set postgresql.url="postgress://[username]:[password]@[pg-host]/[db-name]" \
 ```
 
 Customise Remote Redis URL
 
 ```sh
-    --set redis.local_setup=false \
-    --set env.remote_redis_url="redis://[redis-host]:[6379]" \
+    --set redis.enabled=false \
+    --set redis.url="redis://[redis-host]:[6379]" \
 ```
 
 Customise Document Store - Change from Minio to AWS S3

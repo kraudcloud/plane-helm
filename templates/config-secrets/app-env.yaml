@@ -41,15 +41,13 @@ data:
     CORS_ALLOWED_ORIGINS: ""
     {{- end }}
 
-    {{- if .Values.redis.local_setup }}
-    REDIS_URL: "redis://{{ .Release.Name }}-redis.{{ .Release.Namespace }}.svc.cluster.local:6379/"
+    {{- if .Values.redis.enabled }}
+    REDIS_URL: "redis://{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}"
     {{- else }}
-    REDIS_URL: {{ .Values.env.remote_redis_url | default "" | quote }}
+    REDIS_URL: {{ required "redis.url is required when redis.enabled is false" .Values.redis.url | quote }}
     {{- end }}
-
-    {{ if .Values.postgresql.enabled }}
-    DATABASE_URL: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc.cluster.local/{{ .Values.postgresql.auth.database }}"
-    {{ else }}
-    DATABASE_URL: {{ .Values.postgresql.url }}
-    {{ end }}
-
+    {{- if .Values.postgresql.enabled }}
+    DATABASE_URL: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}/{{ .Values.postgresql.auth.database }}"
+    {{- else }}
+    DATABASE_URL: {{ required "posgres.url is required when postgres.enabled is false" .Values.postgresql.url | quote }}
+    {{- end }}
