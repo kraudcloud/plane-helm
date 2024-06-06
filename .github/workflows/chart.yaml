@@ -2,8 +2,8 @@ name: Release Charts
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 1.**
 
 jobs:
   release:
@@ -17,15 +17,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Chart version
-        id: chart_version
-        run: echo "chart_version=$(cat ./Chart.yaml | grep '^version:' | awk '{print $2}')" >> "$GITHUB_OUTPUT"
-
       - name: Run chart-releaser
         uses: Karitham/helm-oci-chart-releaser@b720e7e58d9e73b06f71f027ab61b54cb46b0964
         with:
           name: plane-helm
-          tag: ${{ steps.chart_version.outputs.chart_version }}
+          tag: ${{ github.ref_name }}
           path: ./
           registry: ghcr.io/karitham
           repository: plane-helm
