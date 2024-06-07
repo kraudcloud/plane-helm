@@ -19,7 +19,7 @@ helm install \
     --create-namespace \
     --namespace plane \
     --set ingress.host="plane.example.com" \
-    plane oci://ghcr.io/karitham/helm-plane/helm-plane:1.1.2
+    plane oci://ghcr.io/karitham/helm-plane/helm-plane:1.1.4
 ```
 
 Customise Remote Postgress URL
