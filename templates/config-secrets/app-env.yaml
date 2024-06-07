@@ -7,6 +7,16 @@ metadata:
 stringData:
   # This is the secret key used by Django to generate secure hashes.
   SECRET_KEY: {{ .Values.env.secret_key | default (randAlphaNum 255 | b64enc) | quote }}
+  {{- if .Values.redis.enabled }}
+  REDIS_URL: "redis://:{{ .Values.redis.auth.password | urlquery }}@{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}"
+  {{- else }}
+  REDIS_URL: {{ required "redis.url is required when redis.enabled is false" .Values.redis.url | quote }}
+  {{- end }}
+  {{- if .Values.postgresql.enabled }}
+  DATABASE_URL: "postgresql://{{ .Values.postgresql.auth.username | urlquery }}:{{ .Values.postgresql.auth.password | urlquery }}@{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}/{{ .Values.postgresql.auth.database }}"
+  {{- else }}
+  DATABASE_URL: {{ required "posgres.url is required when postgres.enabled is false" .Values.postgresql.url | quote }}
+  {{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -38,15 +48,4 @@ data:
     CORS_ALLOWED_ORIGINS: "http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}"
     {{- else }}
     CORS_ALLOWED_ORIGINS: ""
-    {{- end }}
-
-    {{- if .Values.redis.enabled }}
-    REDIS_URL: "redis://:{{ .Values.redis.auth.password }}@{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}"
-    {{- else }}
-    REDIS_URL: {{ required "redis.url is required when redis.enabled is false" .Values.redis.url | quote }}
-    {{- end }}
-    {{- if .Values.postgresql.enabled }}
-    DATABASE_URL: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}/{{ .Values.postgresql.auth.database }}"
-    {{- else }}
-    DATABASE_URL: {{ required "posgres.url is required when postgres.enabled is false" .Values.postgresql.url | quote }}
     {{- end }}
