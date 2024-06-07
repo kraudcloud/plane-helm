@@ -10,11 +10,15 @@ ingress:
   enabled: true
   host: "plane.example.com"
   ingressClass: ""
-  tls: {}
+  tls: []
   annotations: {}
 
 redis:
   enabled: true
+  auth:
+    password: password
+  replica:
+    replicaCount: 1
   url: ""
 
 postgresql:
@@ -26,67 +30,61 @@ postgresql:
     database: plane
 
 minio:
-  local_setup: true
-  image: minio/minio:latest
-  storageClass: longhorn
-  volumeSize: 5Gi
-  root_user: admin
-  root_password: password
+  enabled: true
+  # this name follows the naming of the minio helm chart.
+  # we only need this one name so we only ever 1 entry in this.
+  defaultBuckets: "uploads"
+  sizeLimit: "5242880" # 5MB
+  auth:
+    rootUser: admin
+    rootPassword: password
+  external:
+    accessKey: ""
+    secretKey: ""
+    region: ""
+    endpoint: ""
 
 web:
   replicas: 1
-  memoryLimit: 1000Mi
-  cpuLimit: 500m
+  memoryLimit: 500Mi
+  cpuLimit: 250m
   image: makeplane/plane-frontend
 
 space:
   replicas: 1
-  memoryLimit: 1000Mi
-  cpuLimit: 500m
+  memoryLimit: 500Mi
+  cpuLimit: 250m
   image: makeplane/plane-space
 
 admin:
   replicas: 1
   memoryLimit: 1000Mi
-  cpuLimit: 500m
+  cpuLimit: 250m
   image: makeplane/plane-admin
 
 api:
   replicas: 1
-  memoryLimit: 1000Mi
-  cpuLimit: 500m
+  memoryLimit: 500Mi
+  cpuLimit: 250m
   image: makeplane/plane-backend
 
 worker:
   replicas: 1
-  memoryLimit: 1000Mi
-  cpuLimit: 500m
+  memoryLimit: 500Mi
+  cpuLimit: 250m
   image: makeplane/plane-backend
 
 beatworker:
   replicas: 1
-  memoryLimit: 1000Mi
-  cpuLimit: 500m
+  memoryLimit: 500Mi
+  cpuLimit: 250m
   image: makeplane/plane-backend
 
 env:
-  # NEXT_PUBLIC_DEPLOY_URL:  ""
-  # DATA STORE
-  docstore_bucket: "uploads"
-  doc_upload_size_limit: "5242880" # 5MB
-
-  # REQUIRED IF MINIO LOCAL SETUP IS FALSE
-  aws_access_key: ""
-  aws_secret_access_key: ""
-  aws_region: ""
-
-  secret_key: "60gp0byfz2dvffa45cxl20p1scy9xbpf6d8c5y0geejgkyp1b5"
-
+  # https://github.com/makeplane/plane/blob/preview/app.json
+  secret_key: ""
   sentry_dsn: ""
   sentry_environment: ""
-
   gunicorn_api_workers: 1
-
   cors_allowed_origins: ""
-
   enable_signups: 1
