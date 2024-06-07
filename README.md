@@ -39,11 +39,12 @@ Customise Remote Redis URL
 Customise Document Store - Change from Minio to AWS S3
 
 ```sh
-    --set minio.local_setup=false \
-    --set env.aws_access_key="xxxxxxx" \
-    --set env.aws_secret_access_key="xxxxxxx" \
-    --set env.aws_region="xxxxxxx" \
-    --set env.docstore_bucket="xxxxxxx" \
+    --set minio.enabled=false \
+    --set minio.defaultBuckets="uploads" \
+    --set minio.external.accessKey="" \
+    --set minio.external.secretKey="" \
+    --set minio.external.region="" \
+    --set minio.external.endpoint="" \
 ```
 
 See configuration settings in the values.yaml file, along with their defaults.

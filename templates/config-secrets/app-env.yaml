@@ -4,11 +4,10 @@ type: Opaque
 metadata:
   namespace: {{ .Release.Namespace }}
   name: {{ .Release.Name }}-app-secrets
-data:
-  SECRET_KEY: {{ .Values.env.secret_key | default "60gp0byfz2dvffa45cxl20p1scy9xbpf6d8c5y0geejgkyp1b5" | b64enc | quote }}
-
+stringData:
+  # This is the secret key used by Django to generate secure hashes.
+  SECRET_KEY: {{ .Values.env.secret_key | default (randAlphaNum 255 | b64enc) | quote }}
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -32,17 +31,17 @@ data:
     {{- if eq .Values.env.cors_allowed_origins "*"}}
     CORS_ALLOWED_ORIGINS: "*"
     {{- else if and .Values.ingress.enabled .Values.ingress.host .Values.env.cors_allowed_origins }}
-    CORS_ALLOWED_ORIGINS: "http://{{ .Values.ingress.host }},https://{{ .Values.ingress.host }},{{ .Values.env.cors_allowed_origins }}"
+    CORS_ALLOWED_ORIGINS: "http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }},{{ .Values.env.cors_allowed_origins }}"
     {{- else if .Values.env.cors_allowed_origins }}
     CORS_ALLOWED_ORIGINS: "{{ .Values.env.cors_allowed_origins }}"
     {{- else if and .Values.ingress.enabled .Values.ingress.host}}
-    CORS_ALLOWED_ORIGINS: "http://{{ .Values.ingress.host }},https://{{ .Values.ingress.host }}"
+    CORS_ALLOWED_ORIGINS: "http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}"
     {{- else }}
     CORS_ALLOWED_ORIGINS: ""
     {{- end }}
 
     {{- if .Values.redis.enabled }}
-    REDIS_URL: "redis://{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}"
+    REDIS_URL: "redis://:{{ .Values.redis.auth.password }}@{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}"
     {{- else }}
     REDIS_URL: {{ required "redis.url is required when redis.enabled is false" .Values.redis.url | quote }}
     {{- end }}
