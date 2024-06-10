@@ -46,38 +46,68 @@ minio:
 
 web:
   replicas: 1
-  memoryLimit: 500Mi
-  cpuLimit: 250m
+  resources: {}
+  # requests:
+  #   memory: "64Mi"
+  #   cpu: "250m"
+  # limits:
+  #   memory: "128Mi"
+  #   cpu: "500m"
   image: makeplane/plane-frontend
 
 space:
   replicas: 1
-  memoryLimit: 500Mi
-  cpuLimit: 250m
+  resources: {}
+  # requests:
+  #   memory: "64Mi"
+  #   cpu: "250m"
+  # limits:
+  #   memory: "128Mi"
+  #   cpu: "500m"
   image: makeplane/plane-space
 
 admin:
   replicas: 1
-  memoryLimit: 1000Mi
-  cpuLimit: 250m
+  resources: {}
+  # requests:
+  #   memory: "64Mi"
+  #   cpu: "250m"
+  # limits:
+  #   memory: "128Mi"
+  #   cpu: "500m"
   image: makeplane/plane-admin
 
 api:
   replicas: 1
-  memoryLimit: 500Mi
-  cpuLimit: 250m
+  resources: {}
+  # requests:
+  #   memory: "64Mi"
+  #   cpu: "250m"
+  # limits:
+  #   memory: "128Mi"
+  #   cpu: "500m"
   image: makeplane/plane-backend
 
 worker:
   replicas: 1
-  memoryLimit: 500Mi
-  cpuLimit: 250m
+  resources: {}
+  # requests:
+  #   memory: "64Mi"
+  #   cpu: "250m"
+  # limits:
+  #   memory: "128Mi"
+  #   cpu: "500m"
   image: makeplane/plane-backend
 
 beatworker:
   replicas: 1
-  memoryLimit: 500Mi
-  cpuLimit: 250m
+  resources: {}
+  # requests:
+  #   memory: "64Mi"
+  #   cpu: "250m"
+  # limits:
+  #   memory: "128Mi"
+  #   cpu: "500m"
   image: makeplane/plane-backend
 
 env:

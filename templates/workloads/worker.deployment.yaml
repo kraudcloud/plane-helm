@@ -20,13 +20,7 @@ spec:
         image: {{ .Values.worker.image | default "makeplane/plane-backend" }}:{{ .Values.planeVersion }}
         stdin: true
         tty: true
-        resources:
-          requests:
-            memory: "50Mi"
-            cpu: "50m"
-          limits:
-            memory: {{ .Values.worker.memoryLimit  | default "1000Mi" | quote }}
-            cpu: {{ .Values.worker.cpuLimit | default "500m" | quote}}
+        resources: {{ toYaml .Values.worker.resources | nindent 10 }}
         command:
           - ./bin/docker-entrypoint-worker.sh
         envFrom:

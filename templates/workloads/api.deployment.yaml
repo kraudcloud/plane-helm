@@ -40,13 +40,7 @@ spec:
         image: {{ .Values.api.image | default "makeplane/plane-backend" }}:{{ .Values.planeVersion }}
         stdin: true
         tty: true
-        resources:
-          requests:
-            memory: "50Mi"
-            cpu: "50m"
-          limits:
-            memory: {{ .Values.api.memoryLimit  | default "1000Mi" | quote }}
-            cpu: {{ .Values.api.cpuLimit | default "500m" | quote}}
+        resources: {{ toYaml .Values.api.resources | nindent 10 }}
         command:
           - ./bin/docker-entrypoint-api.sh
         envFrom:

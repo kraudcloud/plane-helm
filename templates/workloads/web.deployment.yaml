@@ -40,13 +40,7 @@ spec:
         image: {{ .Values.web.image | default "makeplane/plane-frontend" }}:{{ .Values.planeVersion }}
         stdin: true
         tty: true
-        resources:
-          requests:
-            memory: "50Mi"
-            cpu: "50m"
-          limits:
-            memory: {{ .Values.web.memoryLimit  | default "1000Mi" | quote }}
-            cpu: {{ .Values.web.cpuLimit | default "500m" | quote}}
+        resources: {{ toYaml .Values.web.resources | nindent 10 }}
         command:
           - node
         args:
