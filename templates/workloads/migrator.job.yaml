@@ -13,7 +13,9 @@ spec:
     spec:
       containers:
       - name: {{ .Release.Name }}-api-migrate
-        image: {{ .Values.api.image | default "makeplane/plane-backend" }}:{{ .Values.planeVersion }}
+        {{ $i := .Values.api.image }}
+        imagePullPolicy: "{{ $i.pullPolicy }}"
+        image: "{{ $i.name }}:{{ coalesce $i.tag .Values.global.image.tag .Chart.AppVersion "stable" }}"
         command: 
           - ./bin/docker-entrypoint-migrator.sh
         imagePullPolicy: Always

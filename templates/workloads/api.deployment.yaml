@@ -36,8 +36,9 @@ spec:
     spec:
       containers:
       - name: {{ .Release.Name }}-api
-        imagePullPolicy: Always
-        image: {{ .Values.api.image | default "makeplane/plane-backend" }}:{{ .Values.planeVersion }}
+        {{ $i := .Values.api.image }}
+        imagePullPolicy: "{{ $i.pullPolicy }}"
+        image: "{{ $i.name }}:{{ coalesce $i.tag .Values.global.image.tag .Chart.AppVersion "stable" }}"
         stdin: true
         tty: true
         resources: {{ toYaml .Values.api.resources | nindent 10 }}

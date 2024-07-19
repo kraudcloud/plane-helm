@@ -16,8 +16,9 @@ spec:
     spec:
       containers:
       - name: {{ .Release.Name }}-beat-worker
-        imagePullPolicy: Always
-        image: {{ .Values.beatworker.image | default "makeplane/plane-backend" }}:{{ .Values.planeVersion }}
+        {{ $i := .Values.beatworker.image }}
+        imagePullPolicy: "{{ $i.pullPolicy }}"
+        image: "{{ $i.name }}:{{ coalesce $i.tag .Values.global.image.tag .Chart.AppVersion "stable" }}"
         stdin: true
         tty: true
         resources: {{ toYaml .Values.beatworker.resources | nindent 10 }}

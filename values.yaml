@@ -1,18 +1,26 @@
-planeVersion: stable
+## @section Global
+##
+## @param global.image.tag [default: .Chart.AppVersion] Tag for all images relevant to plane
+global:
+  image:
+    tag: ""
 
-dockerRegistry:
-  enabled: false
-  host: "index.docker.io/v1/"
-  loginid: makeplane
-  password: ""
-
+## @param ingress.enabled Enable ingress
+## @param ingress.host Hostname to your Plane installation
+## @param ingress.ingressClass Ingress class
+## @param ingress.tls TLS configuration for the ingress
+## @param ingress.annotations Annotations for the ingress (eg, cert-manager)
 ingress:
-  enabled: true
+  enabled: false
   host: "plane.example.com"
   ingressClass: ""
   tls: []
   annotations: {}
 
+## @param redis.enabled Enable redis
+## @param redis.auth.password Redis password
+## @param redis.replica.replicaCount Number of replicas
+## @param redis.url Redis url
 redis:
   enabled: true
   auth:
@@ -21,6 +29,11 @@ redis:
     replicaCount: 1
   url: ""
 
+## @param postgresql.enabled Enable postgresql
+## @param postgresql.url Postgresql url
+## @param postgresql.auth.username Postgresql username
+## @param postgresql.auth.password Postgresql password
+## @param postgresql.auth.database Postgresql database
 postgresql:
   enabled: true
   url: ""
@@ -29,6 +42,15 @@ postgresql:
     password: password
     database: plane
 
+## @param minio.enabled Enable minio
+## @param minio.defaultBuckets Default buckets to create
+## @param minio.sizeLimit Size limit for uploads
+## @param minio.auth.rootUser Root user for minio
+## @param minio.auth.rootPassword Root password for minio
+## @param minio.external.accessKey Access key for minio
+## @param minio.external.secretKey Secret key for minio
+## @param minio.external.region Region for minio
+## @param minio.external.endpoint Endpoint for minio
 minio:
   enabled: true
   # this name follows the naming of the minio helm chart.
@@ -44,6 +66,13 @@ minio:
     region: ""
     endpoint: ""
 
+## @section Internal configuration
+##
+## @param web.replicas Number of replicas for web
+## @param web.resources [object] Resources for web
+## @param web.image.name Name of image for web
+## @param web.image.tag Tag of image for web
+## @param web.image.pullPolicy Pull policy for image for web
 web:
   replicas: 1
   resources: {}
@@ -53,8 +82,16 @@ web:
   # limits:
   #   memory: "128Mi"
   #   cpu: "500m"
-  image: makeplane/plane-frontend
+  image:
+    name: docker.io/makeplane/plane-frontend
+    tag: ""
+    pullPolicy: ""
 
+## @param space.replicas Number of replicas for space
+## @param space.resources [object] Resources for space
+## @param space.image.name Name of image for space
+## @param space.image.tag Tag of image for space
+## @param space.image.pullPolicy Pull policy for image for space
 space:
   replicas: 1
   resources: {}
@@ -64,8 +101,16 @@ space:
   # limits:
   #   memory: "128Mi"
   #   cpu: "500m"
-  image: makeplane/plane-space
+  image:
+    name: docker.io/makeplane/plane-space
+    tag: ""
+    pullPolicy: ""
 
+## @param admin.replicas Number of replicas for admin
+## @param admin.resources [object] Resources for admin
+## @param admin.image.name Name of image for admin
+## @param admin.image.tag Tag of image for admin
+## @param admin.image.pullPolicy Pull policy for image for admin
 admin:
   replicas: 1
   resources: {}
@@ -75,8 +120,16 @@ admin:
   # limits:
   #   memory: "128Mi"
   #   cpu: "500m"
-  image: makeplane/plane-admin
+  image:
+    name: docker.io/makeplane/plane-admin
+    tag: ""
+    pullPolicy: ""
 
+## @param api.replicas Number of replicas for api
+## @param api.resources [object] Resources for api
+## @param api.image.name Name of image for api
+## @param api.image.tag Tag of image for api
+## @param api.image.pullPolicy Pull policy for image for api
 api:
   replicas: 1
   resources: {}
@@ -86,8 +139,16 @@ api:
   # limits:
   #   memory: "128Mi"
   #   cpu: "500m"
-  image: makeplane/plane-backend
+  image:
+    name: docker.io/makeplane/plane-backend
+    tag: ""
+    pullPolicy: ""
 
+## @param worker.replicas Number of replicas for worker
+## @param worker.resources [object] Resources for worker
+## @param worker.image.name Name of image for worker
+## @param worker.image.tag Tag of image for worker
+## @param worker.image.pullPolicy Pull policy for image for worker
 worker:
   replicas: 1
   resources: {}
@@ -97,8 +158,16 @@ worker:
   # limits:
   #   memory: "128Mi"
   #   cpu: "500m"
-  image: makeplane/plane-backend
+  image:
+    name: docker.io/makeplane/plane-backend
+    tag: ""
+    pullPolicy: ""
 
+## @param beatworker.replicas Number of replicas for beatworker
+## @param beatworker.resources [object] Resources for beatworker
+## @param beatworker.image.name Name of image for beatworker
+## @param beatworker.image.tag Tag of image for beatworker
+## @param beatworker.image.pullPolicy Pull policy for image for beatworker
 beatworker:
   replicas: 1
   resources: {}
@@ -108,8 +177,19 @@ beatworker:
   # limits:
   #   memory: "128Mi"
   #   cpu: "500m"
-  image: makeplane/plane-backend
+  image:
+    name: docker.io/makeplane/plane-backend
+    tag: ""
+    pullPolicy: ""
 
+## @section Configuration
+##
+## @param env.secret_key Secret key for plane
+## @param env.sentry_dsn Sentry DSN for plane
+## @param env.sentry_environment Sentry environment for plane
+## @param env.gunicorn_api_workers Number of workers for gunicorn api
+## @param env.cors_allowed_origins CORS allowed origins for plane
+## @param env.enable_signups Enable signups for plane
 env:
   # https://github.com/makeplane/plane/blob/preview/app.json
   secret_key: ""
