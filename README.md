@@ -53,32 +53,52 @@ See configuration settings in the values.yaml file, along with their defaults.
 
 ### Global
 
-| Name                         | Description                                    | Value               |
-| ---------------------------- | ---------------------------------------------- | ------------------- |
-| `global.image.tag`           | Tag for all images relevant to plane           | `.Chart.AppVersion` |
-| `ingress.enabled`            | Enable ingress                                 | `false`             |
-| `ingress.host`               | Hostname to your Plane installation            | `plane.example.com` |
-| `ingress.ingressClass`       | Ingress class                                  | `""`                |
-| `ingress.tls`                | TLS configuration for the ingress              | `[]`                |
-| `ingress.annotations`        | Annotations for the ingress (eg, cert-manager) | `{}`                |
-| `redis.enabled`              | Enable redis                                   | `true`              |
-| `redis.auth.password`        | Redis password                                 | `password`          |
-| `redis.replica.replicaCount` | Number of replicas                             | `1`                 |
-| `redis.url`                  | Redis url                                      | `""`                |
-| `postgresql.enabled`         | Enable postgresql                              | `true`              |
-| `postgresql.url`             | Postgresql url                                 | `""`                |
-| `postgresql.auth.username`   | Postgresql username                            | `plane`             |
-| `postgresql.auth.password`   | Postgresql password                            | `password`          |
-| `postgresql.auth.database`   | Postgresql database                            | `plane`             |
-| `minio.enabled`              | Enable minio                                   | `true`              |
-| `minio.defaultBuckets`       | Default buckets to create                      | `uploads`           |
-| `minio.sizeLimit`            | Size limit for uploads                         | `5242880`           |
-| `minio.auth.rootUser`        | Root user for minio                            | `admin`             |
-| `minio.auth.rootPassword`    | Root password for minio                        | `password`          |
-| `minio.external.accessKey`   | Access key for minio                           | `""`                |
-| `minio.external.secretKey`   | Secret key for minio                           | `""`                |
-| `minio.external.region`      | Region for minio                               | `""`                |
-| `minio.external.endpoint`    | Endpoint for minio                             | `""`                |
+| Name               | Description                          | Value               |
+| ------------------ | ------------------------------------ | ------------------- |
+| `global.image.tag` | Tag for all images relevant to plane | `.Chart.AppVersion` |
+
+### Ingress
+
+| Name                   | Description                                    | Value               |
+| ---------------------- | ---------------------------------------------- | ------------------- |
+| `ingress.enabled`      | Enable ingress                                 | `false`             |
+| `ingress.host`         | Hostname to your Plane installation            | `plane.example.com` |
+| `ingress.ingressClass` | Ingress class                                  | `""`                |
+| `ingress.tls`          | TLS configuration for the ingress              | `[]`                |
+| `ingress.annotations`  | Annotations for the ingress (eg, cert-manager) | `{}`                |
+
+### Redis
+
+| Name                         | Description        | Value      |
+| ---------------------------- | ------------------ | ---------- |
+| `redis.enabled`              | Enable redis       | `true`     |
+| `redis.auth.password`        | Redis password     | `password` |
+| `redis.replica.replicaCount` | Number of replicas | `1`        |
+| `redis.url`                  | Redis url          | `""`       |
+
+### Postgres
+
+| Name                       | Description         | Value      |
+| -------------------------- | ------------------- | ---------- |
+| `postgresql.enabled`       | Enable postgresql   | `true`     |
+| `postgresql.url`           | Postgresql url      | `""`       |
+| `postgresql.auth.username` | Postgresql username | `plane`    |
+| `postgresql.auth.password` | Postgresql password | `password` |
+| `postgresql.auth.database` | Postgresql database | `plane`    |
+
+### Minio
+
+| Name                       | Description               | Value      |
+| -------------------------- | ------------------------- | ---------- |
+| `minio.enabled`            | Enable minio              | `true`     |
+| `minio.defaultBuckets`     | Default buckets to create | `uploads`  |
+| `minio.sizeLimit`          | Size limit for uploads    | `5242880`  |
+| `minio.auth.rootUser`      | Root user for minio       | `admin`    |
+| `minio.auth.rootPassword`  | Root password for minio   | `password` |
+| `minio.external.accessKey` | Access key for minio      | `""`       |
+| `minio.external.secretKey` | Secret key for minio      | `""`       |
+| `minio.external.region`    | Region for minio          | `""`       |
+| `minio.external.endpoint`  | Endpoint for minio        | `""`       |
 
 ### Internal configuration
 
@@ -89,21 +109,25 @@ See configuration settings in the values.yaml file, along with their defaults.
 | `web.image.name`              | Name of image for web                | `docker.io/makeplane/plane-frontend` |
 | `web.image.tag`               | Tag of image for web                 | `""`                                 |
 | `web.image.pullPolicy`        | Pull policy for image for web        | `""`                                 |
+| `web.service.type`            | Type of service for web              | `""`                                 |
 | `space.replicas`              | Number of replicas for space         | `1`                                  |
 | `space.resources`             | Resources for space                  | `{}`                                 |
 | `space.image.name`            | Name of image for space              | `docker.io/makeplane/plane-space`    |
 | `space.image.tag`             | Tag of image for space               | `""`                                 |
 | `space.image.pullPolicy`      | Pull policy for image for space      | `""`                                 |
+| `space.service.type`          | Type of service for space            | `""`                                 |
 | `admin.replicas`              | Number of replicas for admin         | `1`                                  |
 | `admin.resources`             | Resources for admin                  | `{}`                                 |
 | `admin.image.name`            | Name of image for admin              | `docker.io/makeplane/plane-admin`    |
 | `admin.image.tag`             | Tag of image for admin               | `""`                                 |
 | `admin.image.pullPolicy`      | Pull policy for image for admin      | `""`                                 |
+| `admin.service.type`          | Type of service for admin            | `""`                                 |
 | `api.replicas`                | Number of replicas for api           | `1`                                  |
 | `api.resources`               | Resources for api                    | `{}`                                 |
 | `api.image.name`              | Name of image for api                | `docker.io/makeplane/plane-backend`  |
 | `api.image.tag`               | Tag of image for api                 | `""`                                 |
 | `api.image.pullPolicy`        | Pull policy for image for api        | `""`                                 |
+| `api.service.type`            | Type of service for api              | `""`                                 |
 | `worker.replicas`             | Number of replicas for worker        | `1`                                  |
 | `worker.resources`            | Resources for worker                 | `{}`                                 |
 | `worker.image.name`           | Name of image for worker             | `docker.io/makeplane/plane-backend`  |

@@ -5,6 +5,8 @@ global:
   image:
     tag: ""
 
+## @section Ingress
+
 ## @param ingress.enabled Enable ingress
 ## @param ingress.host Hostname to your Plane installation
 ## @param ingress.ingressClass Ingress class
@@ -16,6 +18,8 @@ ingress:
   ingressClass: ""
   tls: []
   annotations: {}
+
+## @section Redis
 
 ## @param redis.enabled Enable redis
 ## @param redis.auth.password Redis password
@@ -29,6 +33,8 @@ redis:
     replicaCount: 1
   url: ""
 
+## @section Postgres
+
 ## @param postgresql.enabled Enable postgresql
 ## @param postgresql.url Postgresql url
 ## @param postgresql.auth.username Postgresql username
@@ -41,6 +47,8 @@ postgresql:
     username: plane
     password: password
     database: plane
+
+## @section Minio
 
 ## @param minio.enabled Enable minio
 ## @param minio.defaultBuckets Default buckets to create
@@ -73,6 +81,7 @@ minio:
 ## @param web.image.name Name of image for web
 ## @param web.image.tag Tag of image for web
 ## @param web.image.pullPolicy Pull policy for image for web
+## @param web.service.type Type of service for web
 web:
   replicas: 1
   resources: {}
@@ -86,12 +95,15 @@ web:
     name: docker.io/makeplane/plane-frontend
     tag: ""
     pullPolicy: ""
+  service:
+    type: ""
 
 ## @param space.replicas Number of replicas for space
 ## @param space.resources [object] Resources for space
 ## @param space.image.name Name of image for space
 ## @param space.image.tag Tag of image for space
 ## @param space.image.pullPolicy Pull policy for image for space
+## @param space.service.type Type of service for space
 space:
   replicas: 1
   resources: {}
@@ -105,12 +117,15 @@ space:
     name: docker.io/makeplane/plane-space
     tag: ""
     pullPolicy: ""
+  service:
+    type: ""
 
 ## @param admin.replicas Number of replicas for admin
 ## @param admin.resources [object] Resources for admin
 ## @param admin.image.name Name of image for admin
 ## @param admin.image.tag Tag of image for admin
 ## @param admin.image.pullPolicy Pull policy for image for admin
+## @param admin.service.type Type of service for admin
 admin:
   replicas: 1
   resources: {}
@@ -124,12 +139,15 @@ admin:
     name: docker.io/makeplane/plane-admin
     tag: ""
     pullPolicy: ""
+  service:
+    type: ""
 
 ## @param api.replicas Number of replicas for api
 ## @param api.resources [object] Resources for api
 ## @param api.image.name Name of image for api
 ## @param api.image.tag Tag of image for api
 ## @param api.image.pullPolicy Pull policy for image for api
+## @param api.service.type Type of service for api
 api:
   replicas: 1
   resources: {}
@@ -143,6 +161,8 @@ api:
     name: docker.io/makeplane/plane-backend
     tag: ""
     pullPolicy: ""
+  service:
+    type: ""
 
 ## @param worker.replicas Number of replicas for worker
 ## @param worker.resources [object] Resources for worker

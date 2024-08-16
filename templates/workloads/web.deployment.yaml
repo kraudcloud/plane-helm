@@ -7,7 +7,7 @@ metadata:
   labels:
     app.name: {{ .Release.Namespace }}-{{ .Release.Name }}-web
 spec:
-  clusterIP: None
+  type: {{ .Values.web.service.type | default "ClusterIP" }}
   ports:
   - name: web-3000
     port: 3000

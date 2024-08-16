@@ -7,7 +7,7 @@ metadata:
   labels:
     app.name: {{ .Release.Namespace }}-{{ .Release.Name }}-space
 spec:
-  clusterIP: None
+  type: {{ .Values.space.service.type | default "ClusterIP" }}
   ports:
   - name: space-3000
     port: 3000
