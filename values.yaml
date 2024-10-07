@@ -48,6 +48,18 @@ postgresql:
     password: password
     database: plane
 
+## @section Rabbitmq
+## @param rabbitmq.enabled Enable rabbitmq
+## @param rabbitmq.url Rabbitmq url
+## @param rabbitmq.auth.username Rabbitmq username
+## @param rabbitmq.auth.password Rabbitmq password
+rabbitmq:
+  enabled: true
+  url: ""
+  auth:
+    username: plane
+    password: password
+
 ## @section Minio
 
 ## @param minio.enabled Enable minio
