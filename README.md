@@ -9,7 +9,7 @@ Follow below steps to setup **Plane**
 You must refer the configuration variables before proceeding. This can be done by running the below command or visiting **Configuration** tab.
 
 ```sh
-helm show values oci://ghcr.io/karitham/plane-helm/plane-helm
+helm show values oci://ghcr.io/kraudcloud/plane-helm/plane-helm
 ```
 
 Basic Install
@@ -19,7 +19,7 @@ helm install \
     --create-namespace \
     --namespace plane \
     --set ingress.host="plane.example.com" \
-    plane oci://ghcr.io/karitham/helm-plane/helm-plane:1.2.0
+    plane oci://ghcr.io/kraudcloud/helm-plane/helm-plane:1.3.0
 ```
 
 Customise Remote Postgress URL
@@ -85,6 +85,15 @@ See configuration settings in the values.yaml file, along with their defaults.
 | `postgresql.auth.username` | Postgresql username | `plane`    |
 | `postgresql.auth.password` | Postgresql password | `password` |
 | `postgresql.auth.database` | Postgresql database | `plane`    |
+
+### Rabbitmq
+
+| Name                     | Description       | Value      |
+| ------------------------ | ----------------- | ---------- |
+| `rabbitmq.enabled`       | Enable rabbitmq   | `true`     |
+| `rabbitmq.url`           | Rabbitmq url      | `""`       |
+| `rabbitmq.auth.username` | Rabbitmq username | `plane`    |
+| `rabbitmq.auth.password` | Rabbitmq password | `password` |
 
 ### Minio
 

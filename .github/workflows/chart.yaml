@@ -18,12 +18,12 @@ jobs:
           fetch-depth: 0
 
       - name: Run chart-releaser
-        uses: Karitham/helm-oci-chart-releaser@b720e7e58d9e73b06f71f027ab61b54cb46b0964
+        uses: appany/helm-oci-chart-releaser@3c5d99817f3951337934478da3b1fcb0cab227a3
         with:
           name: plane-helm
           tag: ${{ github.ref_name }}
           path: ./
-          registry: ghcr.io/karitham
+          registry: ghcr.io/kraudcloud
           repository: plane-helm
-          registry_username: karitham
+          registry_username: kraudcloud
           registry_password: ${{ secrets.GITHUB_TOKEN }}

@@ -1,12 +1,15 @@
 dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 15.5.2
+  version: 15.5.38
 - name: redis
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 19.5.1
+  version: 20.1.7
 - name: minio
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 14.6.5
-digest: sha256:18f53bc30334011dc770e6c94273bcde5788b740287bb290f4e6ac2611e0f5e9
-generated: "2024-06-07T09:51:19.412735655+02:00"
+  version: 14.7.15
+- name: rabbitmq
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 15.0.1
+digest: sha256:cdaa89a181e9834bcd5cee6e83c4b1acb26dd7c3f817e1aaacced982742ae57b
+generated: "2024-10-07T17:03:54.929447919+02:00"

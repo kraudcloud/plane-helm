@@ -17,6 +17,12 @@ stringData:
   {{- else }}
   DATABASE_URL: {{ required "posgres.url is required when postgres.enabled is false" .Values.postgresql.url | quote }}
   {{- end }}
+
+  {{- if .Values.rabbitmq.enabled }}
+  AMQP_URL: "amqp://{{ .Values.rabbitmq.auth.username | urlquery}}:{{ .Values.rabbitmq.auth.password | urlquery}}@{{ .Release.Name }}-rabbitmq.{{ .Release.Namespace }}/"
+  {{- else if .Values.rabbitmq.external_rabbitmq_url }}
+  AMQP_URL: {{ required "rabbitmq.url is required when rabbitmq.enabled is false" .Values.rabbitmq.url }}
+  {{ end }}
 ---
 apiVersion: v1
 kind: ConfigMap
